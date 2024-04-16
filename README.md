@@ -92,4 +92,16 @@ Karena aplikasi BambangShop ini bersifat multi-threaded, maka pemakaian DashMap 
 
 #### Reflection Publisher-2
 
+1. **In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?**<br>
+Service dan repository sebaiknya dipisahkan dari model agar sejalan dengan Single Responsibility Principle, yaitu setiap class memiliki satu responsibility yang berbeda dengan lainnya. Hal ini membuat kode kita lebih maintainable, modular, dan reusable.
+<br>
+
+2. **What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?**<br>
+Jika kita hanya menggunakan Model yang menghandle data storage dan business logic sekaligus, maka kode kita akan menjadi lebih kompleks karena kedua fungsi tersebut akan digabung menjadi satu kesatuan yang akan menyebabkan tight coupling. Akibatnya, jika ada perubahan dalam salah satu dari kedua fungsi tersebut, akan susah untuk memodifikasinya karena business logic dan data storage nya digabung. Kode kita akan susah untuk di maintain dan juga menjadi kurang fleksibel. Selain itu, tight coupling juga akan menyebabkan proses testing menjadi lebih susah
+<br>
+
+3. **Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects.**<br>
+Sejauh ini, saya belum terlalu meng-eksplor lebih jauh terkait Postman. Tetapi menurut saya, Postman cukup membantu saya dalam testing API dari berbagai tipe HTTP request seperti GET dan PUT. Ini akan sangat berguna ketika group project nanti, yaitu ketika saya ingin mencoba interaksi antar microservice dari app kelompok.
+<br>
+
 #### Reflection Publisher-3
