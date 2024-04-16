@@ -78,44 +78,44 @@ This is the place for you to write reflections:
 
 #### Reflection Publisher-1
 
-1. **In the Observer pattern diagram explained by the Head First Design Pattern book, Subscriber is defined as an interface. Explain based on your understanding of Observer design patterns, do we still need an interface (or trait in Rust) in this BambangShop case, or a single Model struct is enough?**<br>
+1. **In the Observer pattern diagram explained by the Head First Design Pattern book, Subscriber is defined as an interface. Explain based on your understanding of Observer design patterns, do we still need an interface (or trait in Rust) in this BambangShop case, or a single Model struct is enough?**
+
 Pada Observer Design Pattern, menggunakan interface untuk suatu observer (subsrcriber) dapat membuat kode lebih fleksibel dan mengikuti prinsip open closed principle. Dengan interface, kita bisa membuat berbagai macam observer yang masing-masing mengimplementasikan interface dengan cara yang berbeda-beda. Jika kita ingin mendefinisikan tipe opserver yang baru, kita tinggal membuatnya tanpa memodifikasi kode yang sudah ada, sehingga sejalan dengan prinsip open closed principle. Penggunaan interface untuk subscriber dalam konteks BambangShop ini tergantung pada requirement aplikasi nantinya. Jika semua subscriber memiliki model yang sama, maka satu struct saja sudah cukup. Tetapi, jika aplikasi akan mempunyai tipe subscriber yang berbeda-beda, maka menggunakan interface akan sangat membantu dalam pengembangan kode. 
-<br>
 
-2. **id in Program and url in Subscriber is intended to be unique. Explain based on your understanding, is using Vec (list) sufficient or using DashMap (map/dictionary) like we currently use is necessary for this case?**<br>
+2. **id in Program and url in Subscriber is intended to be unique. Explain based on your understanding, is using Vec (list) sufficient or using DashMap (map/dictionary) like we currently use is necessary for this case?**
+
 Menggunakan Vec sebenarnya sudah cukup, tetapi enggunakan DashMap bisa lebih efisien daripada menggunakan Vec. Dalam Vec, proses pencarian id atau url tertentu membutuhkan waktu linier (O(n)). Dalam DashMap, proses pencariannya dapat dilakukan dalam waktu konstan (O(1)), yang jauh lebih cepat untuk jumlah data yang besar. DashMap juga memungkinkan beberapa threads untuk mengakses data secara concurrent
-<br>
 
-3. **When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?**<br>
+3. **When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?**
+
 Karena aplikasi BambangShop ini bersifat multi-threaded, maka pemakaian DashMap untuk singleton instance yaitu SUBSCRIBERS lebih cocok. Singleton pattern pada aslinya tidak thread-safe. Jika ada beberapa threads yang ingin mengakses suatu singleton instance secara concurrent, maka akan menyebabkan data race dan outcome yang unpredictable. Dengan menggunakan DashMap, maka pengaksesan data dapat dilakukan oleh beberapa thread secara concurrent tanpa menyebabkan data races
-<br>
 
 #### Reflection Publisher-2
 
-1. **In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?**<br>
+1. **In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?**
+
 Service dan repository sebaiknya dipisahkan dari model agar sejalan dengan Single Responsibility Principle, yaitu setiap class memiliki satu responsibility yang berbeda dengan lainnya. Hal ini membuat kode kita lebih maintainable, modular, dan reusable.
-<br>
 
-2. **What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?**<br>
+2. **What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?**
+
 Jika kita hanya menggunakan Model yang menghandle data storage dan business logic sekaligus, maka kode kita akan menjadi lebih kompleks karena kedua fungsi tersebut akan digabung menjadi satu kesatuan yang akan menyebabkan tight coupling. Akibatnya, jika ada perubahan dalam salah satu dari kedua fungsi tersebut, akan susah untuk memodifikasinya karena business logic dan data storage nya digabung. Kode kita akan susah untuk di maintain dan juga menjadi kurang fleksibel. Selain itu, tight coupling juga akan menyebabkan proses testing menjadi lebih susah
-<br>
 
-3. **Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects.**<br>
+3. **Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects.**
+
 Sejauh ini, saya belum terlalu meng-eksplor lebih jauh terkait Postman. Tetapi menurut saya, Postman cukup membantu saya dalam testing API dari berbagai tipe HTTP request seperti GET dan PUT. Ini akan sangat berguna ketika group project nanti, yaitu ketika saya ingin mencoba interaksi antar microservice dari app kelompok.
-<br>
 
 #### Reflection Publisher-3
 
-1. **Observer Pattern has two variations: Push model (publisher pushes data to subscribers) and Pull model (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?**<br>
-Pada tutorial ini, variasi observer pattern yang digunakan adalah Push Model. Hal ini bisa diketahui dari adanya method notify di NotificationService dimana method tersebut membuat suatu notification object, mengiterasi seluruh subscriber dan kemudian memanggil method update di setiap subscriber untuk mengirimkan notificationnya.
-<br>
+1. **Observer Pattern has two variations: Push model (publisher pushes data to subscribers) and Pull model (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?**
 
-2. **What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)**<br>
+Pada tutorial ini, variasi observer pattern yang digunakan adalah Push Model. Hal ini bisa diketahui dari adanya method notify di NotificationService dimana method tersebut membuat suatu notification object, mengiterasi seluruh subscriber dan kemudian memanggil method update di setiap subscriber untuk mengirimkan notificationnya.
+
+2. **What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)**
+
 Kelebihan dan kekurangan penggunaan pull model:
 - Kelebihan: Subsrciber bisa me-request update pada data ketika mereka membutuhinya saja. Hal ini bisa mengurangi network traffic dan processing yang tidak diperlukan.
 - Kekurangan: Dapat meningkatkan kompleksitas sistem karena subscriber perlu mengetahui logic untuk pull data. Selain itu, jika subscriber jarang melakukan pembaruan data, maka ada kemungkinan subscriber melakukan operasi dengan data yang sudah outdated.
-<br>
 
-3. **Explain what will happen to the program if we decide to not use multi-threading in the notification process.**<br>
+3. **Explain what will happen to the program if we decide to not use multi-threading in the notification process.**
+
 Jika program tidak menggunakan multi-threading, maka proses notificationnya akan menjadi sinkronus, yaitu setiap notifikasi akan dikirimkan ke semua subscriber secara satu persatu. Akibatnya, proses notifikasi akan menjadi sangat lambat dibanding ketika menggunakan multi-threading. Efeknya dapat dilihat ketika jumlah subscribernya sangat banyak atau ketika waktu yang dibutuhkan untuk mengirimkan sebuah notification sangat lama
-<br>
